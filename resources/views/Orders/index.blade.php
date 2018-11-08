@@ -17,8 +17,10 @@
             <p>Price: {{$product->price}}BTC</p>
             <div class="row justify-content-between">
             <div class="col-4"><small><p>Created at: {{$product->created_at}}</p></small></div>
-            <div class="col-4"><a href="{{ url('/products/order/' . $product->id)}}" class="btn btn-success" role="button" aria-pressed="true">Purchase</a></div>
+            
+            <div class="col-4">@if(!Auth::guest())<a href="{{ url('/products/order/' . $product->id)}}" class="btn btn-success" role="button" aria-pressed="true">Purchase</a><a href="{{ url('/products/order/' . $product->id)}}" class="btn btn-success" role="button" aria-pressed="true">White label</a>@endif</div>
             </div>
+            
           </div>   
         
         

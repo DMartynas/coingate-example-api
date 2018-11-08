@@ -13,7 +13,7 @@
         @for ($i = 0; $i <= 1; $i++)
         <div class="col-4 inlined rounded border ">
           <a href="/products/{{$products[$i]->id}}"><h3>{{$products[$i]->title}}</h3></a>
-                <p>{{$products[$i]->body}}</p>
+                <p><?php echo($products[$i]->body) ?></p>
                 <p>Price: {{$products[$i]->price}}BTC</p>
                 <div class="row justify-content-between">
                 <div class="col-4"><small><p>Created at: {{$products[$i]->created_at}}</p></small></div>

@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand navbar-dark btn-success">
-        <a class="navbar-brand" href="/">PotShop</a>
+        <a class="navbar-brand" href="/">MobPlan</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -12,9 +12,44 @@
             <li class="nav-item active">
               <a class="nav-link" href="/products">Shop</a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/search">Search for order status</a>
-              </li>
+            </li>
           </ul>
         </div>
+        <ul class="navbar-nav ml-auto">
+          <!-- Authentication Links -->
+          @guest
+              <li class="nav-item">
+                  <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+              </li>
+          @else
+          
+              <li class="nav-item dropdown">
+                  <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                      {{ Auth::user()->name }} <span class="caret"></span>
+                  </a>
+
+                  
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/dashboard">Dashboard</a>
+                        @if(Auth::user()->role_id == 3)
+                        <a class="dropdown-item" href="/list/1">List from CoinGate.com</a>
+                        <a class="dropdown-item" href="/products/create">Create Plan</a>
+                        @endif
+                      <a class="dropdown-item" href="{{ route('logout') }}"
+                         onclick="event.preventDefault();
+                                       document.getElementById('logout-form').submit();">
+                          {{ __('Logout') }}
+                      </a>
+
+                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                          @csrf
+                      </form>
+                  </div>
+              </li>
+          @endguest
+      </ul>
+  </div>
       </nav>

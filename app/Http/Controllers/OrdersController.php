@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Order;
+use App\User;
+use DB;
+
 
 class OrdersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -58,7 +66,7 @@ class OrdersController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -68,10 +76,17 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $this->status = $request['status'];
-        $this->save();
+        Order::where('user_id', $request['user_id'])->update(['status' => 'declined']);
+        $order = Order::where('order_id', $request['order_id'])->update(['status' => $request['status']]);/*DB::table('orders')->where('order_id', $request['order_id']);*/
+        var_dump($request['order_id']);
+        //$order->status = $request['status'];
+       // echo "<p>"; var_dump(); echo "</p>";
+        //$order->save();
+        User::where('id', $request['user_id'])->update(['plan' => $request['title']]);
+        
+        return redirect('/dashboard')->with('success', 'Order Updated');
 
     }
 

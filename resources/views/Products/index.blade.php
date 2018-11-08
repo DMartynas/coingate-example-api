@@ -13,12 +13,22 @@
     @foreach ($products as $product)
     <div class="col-4 inlined rounded border ">
             <a href="/products/{{$product->id}}"><h3>{{$product->title}}</h3></a>
-            <p>{{$product->body}}</p>
+            <p><?php echo($product->body) ?></p>
             <p>Price: {{$product->price}}BTC</p>
             <div class="row justify-content-between">
             <div class="col-4"><small><p>Created at: {{$product->created_at}}</p></small></div>
+            @if(!Auth::guest())
             <div class="col-4"><a href="{{ url('/products/order/' . $product->id)}}" class="btn btn-success" role="button" aria-pressed="true">Purchase</a></div>
+            @if(Auth::user()->role_id ==3 )
+            <div class="col-4"><form method="POST" action="{{ route('prod.destroy', [$product->id]) }}">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+                    <button class = "btn btn-danger" type="submit"><i class="fas fa-trash-alt"></i></button>
+                </form>
             </div>
+            @endif
+            @endif
+        </div>
           </div>   
         
         
